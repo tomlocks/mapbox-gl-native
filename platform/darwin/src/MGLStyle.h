@@ -235,8 +235,17 @@ static const NSInteger MGLStyleDefaultVersion = 9;
 /**
  Removes a layer from the map view.
 
+ @note Layer identifiers are not guaranteed to exist across styles or different
+    versions of the same style. Applications that use this API must first set the
+    style URL to an explicitly versioned style using a convenience method like
+    `+[MGLStyle outdoorsStyleURLWithVersion:]`, `MGLMapView`'s “Style URL”
+    inspectable in Interface Builder, or a manually constructed `NSURL`. This
+    approach also avoids layer identifer name changes that will occur in the default
+    style’s layers over time.
+
  @param layer The layer object to remove from the map view. This object
- must conform to the `MGLStyleLayer` protocol.
+    must conform to the `MGLStyleLayer` protocol.
+
  */
 - (void)removeLayer:(MGLStyleLayer *)layer;
 
@@ -250,6 +259,14 @@ static const NSInteger MGLStyleDefaultVersion = 9;
 /**
  Removes a source from the map view.
 
+ @note Source identifiers are not guaranteed to exist across styles or different
+    versions of the same style. Applications that use this API must first set the
+    style URL to an explicitly versioned style using a convenience method like
+    `+[MGLStyle outdoorsStyleURLWithVersion:]`, `MGLMapView`'s “Style URL”
+    inspectable in Interface Builder, or a manually constructed `NSURL`. This
+    approach also avoids layer identifer name changes that will occur in the default
+    style’s layers over time.
+ 
  @param source The source to remove.
  */
 - (void)removeSource:(MGLSource *)source;
@@ -278,6 +295,14 @@ static const NSInteger MGLStyleDefaultVersion = 9;
 /**
  Deactivates the style class with the given identifier.
 
+ @note Style class names are not guaranteed to exist across styles or different
+    versions of the same style. Applications that use this API must first set the
+    style URL to an explicitly versioned style using a convenience method like
+    `+[MGLStyle outdoorsStyleURLWithVersion:]`, `MGLMapView`'s “Style URL”
+    inspectable in Interface Builder, or a manually constructed `NSURL`. This
+    approach also avoids style class name changes that will occur in the default
+    style over time.
+ 
  @param styleClass The style class to deactivate.
  */
 - (void)removeStyleClass:(NSString *)styleClass;
@@ -296,6 +321,14 @@ then set the `iconImage` property of an `MGLSymbolStyleLayer` object to that nam
 /**
  Removes a name and its associated image from the style.
 
+ @note Names and their associated images are not guaranteed to exist across 
+    styles or different versions of the same style. Applications that use this 
+    API must first set the style URL to an explicitly versioned style using a 
+    convenience method like `+[MGLStyle outdoorsStyleURLWithVersion:]`, 
+    `MGLMapView`'s “Style URL” inspectable in Interface Builder, or a manually 
+    constructed `NSURL`. This approach also avoids name changes that will occur 
+    in the default style over time.
+ 
  @param name The name of the image to remove.
  */
 - (void)removeImageForName:(NSString *)name;
