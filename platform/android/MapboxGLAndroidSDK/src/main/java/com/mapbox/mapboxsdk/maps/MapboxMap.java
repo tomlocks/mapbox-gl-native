@@ -358,7 +358,7 @@ public class MapboxMap {
      * @param cameraPosition the camera position to set
      */
     public void setCameraPosition(@NonNull CameraPosition cameraPosition) {
-        transform.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), null);
+        moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), null);
     }
 
     /**
@@ -370,7 +370,7 @@ public class MapboxMap {
      */
     @UiThread
     public final void moveCamera(CameraUpdate update) {
-        transform.moveCamera(update, null);
+        moveCamera(update, null);
     }
 
     /**
@@ -382,8 +382,13 @@ public class MapboxMap {
      * @param callback the callback to be invoked when an animation finishes or is canceled
      */
     @UiThread
-    public final void moveCamera(CameraUpdate update, MapboxMap.CancelableCallback callback) {
-        transform.moveCamera(update, callback);
+    public final void moveCamera(final CameraUpdate update, final MapboxMap.CancelableCallback callback) {
+        mapView.post(new Runnable() {
+            @Override
+            public void run() {
+                transform.moveCamera(update, callback);
+            }
+        });
     }
 
     /**
@@ -504,10 +509,13 @@ public class MapboxMap {
      *                           Do not update or ease the camera from within onCancel().
      */
     @UiThread
-    public final void easeCamera(
-            CameraUpdate update, int durationMs, boolean easingInterpolator, boolean resetTrackingMode, final MapboxMap.CancelableCallback callback) {
-        // dismiss tracking, moving camera is equal to a gesture
-        transform.easeCamera(update, durationMs, easingInterpolator, resetTrackingMode, callback);
+    public final void easeCamera(final CameraUpdate update, final int durationMs, final boolean easingInterpolator, final boolean resetTrackingMode, final MapboxMap.CancelableCallback callback) {
+        mapView.post(new Runnable() {
+            @Override
+            public void run() {
+                transform.easeCamera(update, durationMs, easingInterpolator, resetTrackingMode, callback);
+            }
+        });
     }
 
     /**
@@ -576,8 +584,13 @@ public class MapboxMap {
      * @see com.mapbox.mapboxsdk.camera.CameraUpdateFactory for a set of updates.
      */
     @UiThread
-    public final void animateCamera(CameraUpdate update, int durationMs, final MapboxMap.CancelableCallback callback) {
-        transform.animateCamera(update, durationMs, callback);
+    public final void animateCamera(final CameraUpdate update, final int durationMs, final MapboxMap.CancelableCallback callback) {
+        mapView.post(new Runnable() {
+            @Override
+            public void run() {
+                transform.animateCamera(update, durationMs, callback);
+            }
+        });
     }
 
     /**
