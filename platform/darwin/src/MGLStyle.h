@@ -179,10 +179,10 @@ static const NSInteger MGLStyleDefaultVersion = 9;
  identifier was found.
  
  @note Layer identifiers are not guaranteed to exist across styles or different
-    versions of the same style. Applications that use this API must set the style 
-    URL to an explicitly versioned style using a convenience method like 
+    versions of the same style. Applications that use this API must first set 
+    the style URL to an explicitly versioned style using a convenience method like
     `+[MGLStyle outdoorsStyleURLWithVersion:]`, `MGLMapView`'s “Style URL” 
-    inspectable in Interface Builder, or a manually constructed NSURL. This 
+    inspectable in Interface Builder, or a manually constructed `NSURL`. This
     approach also avoids layer identifer name changes that will occur in the default
     style’s layers over time.
 
@@ -196,10 +196,10 @@ static const NSInteger MGLStyleDefaultVersion = 9;
  Returns a source if any source with the given identifier was found.
  
  @note Source identifiers are not guaranteed to exist across styles or different
-    versions of the same style. Applications that use this API must set the style
-    URL to an explicitly versioned style using a convenience method like
+    versions of the same style. Applications that use this API must first set the 
+    style URL to an explicitly versioned style using a convenience method like
     `+[MGLStyle outdoorsStyleURLWithVersion:]`, `MGLMapView`'s “Style URL”
-    inspectable in Interface Builder, or a manually constructed NSURL. This
+    inspectable in Interface Builder, or a manually constructed `NSURL`. This
     approach also avoids layer identifer name changes that will occur in the default
     style’s layers over time.
 
@@ -220,10 +220,10 @@ static const NSInteger MGLStyleDefaultVersion = 9;
  Inserts a new layer below another layer.
  
  @note Layer identifiers are not guaranteed to exist across styles or different
-    versions of the same style. Applications that use this API must set the style
-    URL to an explicitly versioned style using a convenience method like
+    versions of the same style. Applications that use this API must first set the 
+    style URL to an explicitly versioned style using a convenience method like
     `+[MGLStyle outdoorsStyleURLWithVersion:]`, `MGLMapView`'s “Style URL”
-    inspectable in Interface Builder, or a manually constructed NSURL. This
+    inspectable in Interface Builder, or a manually constructed `NSURL`. This
     approach also avoids layer identifer name changes that will occur in the default
     style’s layers over time.
 
