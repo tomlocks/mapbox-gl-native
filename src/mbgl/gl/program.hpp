@@ -22,6 +22,7 @@ public:
 
     using Vertex = typename Attributes::Vertex;
     using UniformValues = typename Uniforms::Values;
+    using AttributeValues = typename Attributes::Values;
 
     static_assert(std::is_standard_layout<Vertex>::value, "vertex type must use standard layout");
 
@@ -32,7 +33,6 @@ public:
           attributesState(Attributes::state(program)),
           uniformsState((context.linkProgram(program), Uniforms::state(program))) {}
 
-    // Indexed drawing.
     template <class DrawMode>
     void draw(Context& context,
               DrawMode drawMode,
@@ -40,9 +40,10 @@ public:
               StencilMode stencilMode,
               ColorMode colorMode,
               UniformValues&& uniformValues,
-              const VertexBuffer<Vertex>& vertexBuffer,
-              const IndexBuffer<DrawMode>& indexBuffer,
-              const SegmentVector<Attributes>& segments) {
+              AttributeValues&& attributeValues,
+              BufferID vertexBuffer,
+              BufferID indexBuffer,
+              const std::vector<Segment>& segments) {
         static_assert(std::is_same<Primitive, typename DrawMode::Primitive>::value, "incompatible draw mode");
         context.draw({
             std::move(drawMode),
@@ -50,40 +51,15 @@ public:
             std::move(stencilMode),
             std::move(colorMode),
             program,
-            vertexBuffer.buffer,
-            indexBuffer.buffer,
+            vertexBuffer,
+            indexBuffer,
             segments,
             Uniforms::binder(uniformsState, std::move(uniformValues)),
-            Attributes::binder(attributesState)
+            Attributes::binder(attributesState, std::move(attributeValues))
         });
     }
 
-    // Unindexed drawing.
-    template <class DrawMode>
-    void draw(Context& context,
-              DrawMode drawMode,
-              DepthMode depthMode,
-              StencilMode stencilMode,
-              ColorMode colorMode,
-              UniformValues&& uniformValues,
-              const VertexBuffer<Vertex, DrawMode>& vertexBuffer,
-              const SegmentVector<Attributes>& segments) {
-        static_assert(std::is_same<Primitive, typename DrawMode::Primitive>::value, "incompatible draw mode");
-        context.draw({
-            std::move(drawMode),
-            std::move(depthMode),
-            std::move(stencilMode),
-            std::move(colorMode),
-            program,
-            vertexBuffer.buffer,
-            0,
-            segments,
-            Uniforms::binder(uniformsState, std::move(uniformValues)),
-            Attributes::binder(attributesState)
-        });
-    }
-
-private:
+protected:
     UniqueShader vertexShader;
     UniqueShader fragmentShader;
     UniqueProgram program;

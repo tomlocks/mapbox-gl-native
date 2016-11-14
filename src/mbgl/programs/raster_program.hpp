@@ -49,8 +49,8 @@ class RasterProgram : public Program<
 public:
     using Program::Program;
 
-    static Vertex vertex(Point<int16_t> p, Point<uint16_t> t) {
-        return Vertex {
+    static LayoutVertex vertex(Point<int16_t> p, Point<uint16_t> t) {
+        return LayoutVertex {
             {
                 p.x,
                 p.y
@@ -63,6 +63,6 @@ public:
     }
 };
 
-using RasterVertex = RasterProgram::Vertex;
+using RasterVertex = RasterProgram::LayoutVertex;
 
 } // namespace mbgl
