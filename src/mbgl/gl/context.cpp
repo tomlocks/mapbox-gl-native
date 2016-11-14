@@ -496,7 +496,7 @@ void Context::draw(const Drawable& drawable) {
 
             if (segment.vao) {
                 vertexArrayObject = *segment.vao;
-                return false;
+                return true;
             }
 
             VertexArrayID id = 0;
