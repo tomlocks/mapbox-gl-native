@@ -264,8 +264,8 @@ static const NSInteger MGLStyleDefaultVersion = 9;
     style URL to an explicitly versioned style using a convenience method like
     `+[MGLStyle outdoorsStyleURLWithVersion:]`, `MGLMapView`'s “Style URL”
     inspectable in Interface Builder, or a manually constructed `NSURL`. This
-    approach also avoids layer identifer name changes that will occur in the default
-    style’s layers over time.
+    approach also avoids source identifer name changes that will occur in the default
+    style’s sources over time.
  
  @param source The source to remove.
  */
