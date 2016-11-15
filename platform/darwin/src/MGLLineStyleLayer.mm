@@ -71,8 +71,8 @@
 }
 
 - (MGLStyleValue<NSValue *> *)lineJoin {
-    auto propertyValue = self.rawLayer->getLineJoin() ?: self.rawLayer->getDefaultLineJoin();
-    return MGLStyleValueTransformer<mbgl::style::LineJoinType, NSValue *>().toStyleValue(propertyValue);
+    auto propertyValue = self.rawLayer->getLineJoin() ?: self.rawLayer->getDefaultLineJoin();    
+    return MGLStyleValueTransformer<mbgl::style::LineJoinType, NSValue *>().toLineJoinStyleValue(propertyValue);
 }
 
 - (void)setLineMiterLimit:(MGLStyleValue<NSNumber *> *)lineMiterLimit {

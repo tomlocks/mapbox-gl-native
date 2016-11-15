@@ -818,6 +818,24 @@ typedef NS_ENUM(NSInteger, MBXSettingsMiscellaneousRows) {
 
 - (void)styleFilteredLines
 {
+
+#warning remove this test stub
+
+    NSURL *customStyleURL = [[NSURL alloc] initWithString:@"mapbox://styles/boundsj/cipk5wcrv0052cvnfzx8lnbf3"];
+    [self.mapView setStyleURL:customStyleURL];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        MGLLineStyleLayer *randomLineLayer = (MGLLineStyleLayer *)[self.mapView.style layerWithIdentifier:@"random-line"];
+        MGLStyleConstantValue *lineJoin = (MGLStyleConstantValue *)randomLineLayer.lineJoin;
+        NSValue *cap = (NSValue *)lineJoin.rawValue;
+        MGLLineJoin final;
+        [cap getValue:&final];
+        NSLog(@"================> %ld", final);
+    });
+    return;
+
+
+#warning reenable this test
+
     // set style and focus on lower 48
     [self.mapView setStyleURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"line_filter_style" ofType:@"json"]]];
     [self.mapView setCenterCoordinate:CLLocationCoordinate2DMake(40, -97) zoomLevel:5 animated:NO];

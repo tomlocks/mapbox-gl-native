@@ -4,6 +4,8 @@
 
 #import "NSValue+MGLStyleAttributeAdditions.h"
 #import "MGLTypes.h"
+#import "MGLLineStyleLayer.h"
+#import <mbgl/util/enum.hpp>
 
 #if TARGET_OS_IPHONE
     #import "UIColor+MGLAdditions.h"
@@ -26,7 +28,24 @@ public:
             return nil;
         }
     }
-    
+
+    MGLStyleValue<ObjCType> *toLineJoinStyleValue(const mbgl::style::PropertyValue<MBGLType> &mbglValue) {
+        auto str = mbgl::Enum<MBGLType>::toString(mbglValue.asConstant());
+        NSString *enumString = [NSString stringWithCString:str encoding:NSUTF8StringEncoding];
+        NSUInteger enumValue;
+        if ([enumString isEqualToString:@"miter"]) {
+            enumValue = MGLLineJoinMiter;
+        } else if ([enumString isEqualToString:@"bevel"]) {
+            enumValue = MGLLineJoinBevel;
+        } else if ([enumString isEqualToString:@"round"]) {
+            enumValue = MGLLineJoinRound;
+        } else {
+            [NSException raise:@"Value not handled" format:@"%@ is not a valid option", enumString];
+        }
+        auto rawValue = [NSValue value:&enumValue withObjCType:@encode(NSUInteger)];
+        return [MGLStyleConstantValue<ObjCType> valueWithRawValue:rawValue];
+    }
+
     mbgl::style::PropertyValue<MBGLType> toPropertyValue(MGLStyleValue<ObjCType> *value) {
         if ([value isKindOfClass:[MGLStyleConstantValue class]]) {
             MBGLType mbglValue;
@@ -110,7 +129,7 @@ private:
         }
         return array;
     }
-    
+
 private:
     
     void getMBGLValue(NSNumber *rawValue, bool &mbglValue) {
