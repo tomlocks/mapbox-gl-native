@@ -981,7 +981,14 @@ public class MapboxMap {
         long id = mapView.addMarker(marker);
         marker.setId(id);
         annotations.put(id, marker);
-        markerViewManager.invalidateViewMarkersInVisibleRegion();
+
+        // workaround for #7072
+        mapView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                markerViewManager.invalidateViewMarkersInVisibleRegion();
+            }
+        }, 200);
         return marker;
     }
 
@@ -997,7 +1004,14 @@ public class MapboxMap {
             annotations.put(id, marker);
             markers.add(marker);
         }
-        markerViewManager.invalidateViewMarkersInVisibleRegion();
+
+        // workaround for #7072
+        mapView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                markerViewManager.invalidateViewMarkersInVisibleRegion();
+            }
+        }, 200);
         return markers;
     }
 
